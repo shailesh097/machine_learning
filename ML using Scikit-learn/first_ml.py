@@ -19,27 +19,29 @@ diabetes = datasets.load_diabetes()
 #print out the description of the imported dataset
 # print(diabetes.DESCR)
 
-diabetes_x = diabetes.data[:, np.newaxis, 2]
+diabetes_x = diabetes.data
 # print(diabetes_x)
 
 # X train data
-diabetes_train_x = diabetes_x.data[:-30]
-diabetes_test_x = diabetes_x.data[-30:]
+# taking last 350 rows as training dataset and first 92 rows as testing dataset(total 442 rows of data is available)
+x_train = diabetes_x[:-350] 
+x_test = diabetes_x[:92]
 
 # Y train data
-diabetes_train_y = diabetes.target[:-30]
-diabetes_test_y = diabetes.target[-30:]
+y_train = diabetes.target[:-350]
+y_test = diabetes.target[:92]
 
 #creating linear regression model
 model = linear_model.LinearRegression()
-model.fit(diabetes_train_x, diabetes_train_y)
+model.fit(x_train, y_train)
 
 #create a prediction model which shows mean squared error
-diabetes_predicted_y = model.predict(diabetes_test_x)
-print("Mean squared error is: ", mean_squared_error(diabetes_test_y, diabetes_predicted_y))
+predicted_y = model.predict(x_test)
+print("Mean squared error is: ", mean_squared_error(y_test, predicted_y))
 
-print("Weights: ", model.coef_)
-print("Intercept: ", model.intercept_)
+# print("Weights: ", model.coef_)
+# print("Intercept: ", model.intercept_)
 
-plt.scatter(diabetes_test_x, diabetes_test_y)
-plt.show()
+# plt.scatter(x_test, y_test)
+# plt.plot(x_test, predicted_y)
+# plt.show()
